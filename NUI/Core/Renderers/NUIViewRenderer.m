@@ -17,7 +17,8 @@
     } else if ([NUISettings hasProperty:@"background-color" withClass:className]) {
         [view setBackgroundColor: [NUISettings getColor:@"background-color" withClass: className]];
     }
-
+    
+    [self renderOpacity:view withClass:className];
     [self renderSize:view withClass:className];
     [self renderBorder:view withClass:className];
     [self renderShadow:view withClass:className];
@@ -75,6 +76,13 @@
 
     if (height != view.frame.size.height || width != view.frame.size.width) {
         view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y, width, height);
+    }
+}
+
++ (void)renderOpacity:(UIView*)view withClass:(NSString*)className
+{
+    if([NUISettings hasProperty:@"opacity" withClass:className]){
+        [view setAlpha:[NUISettings getFloat:@"opacity" withClass:className]];
     }
 }
 

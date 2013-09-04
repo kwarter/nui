@@ -7,6 +7,7 @@
 //
 
 #import "NUITableViewRenderer.h"
+#import "NUIViewRenderer.h"
 
 @implementation NUITableViewRenderer
 
@@ -22,7 +23,7 @@
         [tableView setSeparatorColor:[NUISettings getColor:@"separator-color" withClass:className]];
     }
 
-    
+    [NUIViewRenderer renderOpacity:tableView withClass:className];
     [self renderSizeDependentProperties:tableView withClass:(NSString*)className];
 }
 

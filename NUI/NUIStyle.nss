@@ -1,133 +1,111 @@
-@primaryFontName: AppleGothic;
-@secondaryFontName: HelveticaNeue-Light;
-@secondaryFontNameBold: HelveticaNeue;
-@secondaryFontNameStrong: HelveticaNeue-Medium;
-@inputFontName: HelveticaNeue;
-@primaryFontColor: #555555;
-@secondaryFontColor: #888888;
-@primaryBackgroundColor: #E6E6E6;
-@primaryBackgroundTintColor: #ECECEC;
-@primaryBackgroundColorTop: #F3F3F3;
-@primaryBackgroundColorBottom: #E6E6E6;
-@primaryBackgroundColorBottomStrong: #DDDDDD;
-@secondaryBackgroundColorTop: #FCFCFC;
-@secondaryBackgroundColorBottom: #F9F9F9;
-@primaryBorderColor: #A2A2A2;
-@primaryBorderWidth: 1;
+@mainBackground: KwarterAssets.bundle/kwarter_common_content_background.png;
+@mainFontColor: white;
+
+NavigationBar {
+    background-image: KwarterAssets.bundle/kwarter_common_navbar_background.png;
+    background-image-insets: 0 10 0 10;
+}
 
 BarButton {
-    background-color: @primaryBackgroundColor;
-    background-color-highlighted: #CCCCCC;
-    border-color: @primaryBorderColor;
-    border-width: @primaryBorderWidth;
-    corner-radius: 7;
-    font-name: @secondaryFontNameBold;
-    font-color: @primaryFontColor;
-    font-color-disabled: @secondaryFontColor;
-    font-size: 13;
-    text-shadow-color: clear;
+    background-image: KwarterAssets.bundle/kwarter_common_navbar_button.png;
+    background-image-insets: 0 10 0 10;
 }
-Button {
-    background-color-top: #FFFFFF;
-    background-color-bottom: @primaryBackgroundColorBottom;
-    border-color: @primaryBorderColor;
-    border-width: @primaryBorderWidth;
-    font-color: @primaryFontColor;
-    font-color-highlighted: @secondaryFontColor;
-    font-name: @secondaryFontName;
-    font-size: 18;
-    height: 37;
-    corner-radius: 7;
-    exclude-views: UIAlertButton;
-    exclude-subviews: UITableViewCell,UITextField;
+
+BarButtonBack {
+    background-image: KwarterAssets.bundle/kwarter_common_navbar_back_button.png;
+    background-image-insets: 0 6 0 12;
 }
-LargeButton {
-    height: 50;
-    font-size: 20;
-    corner-radius: 10;
+
+section {
+    font-color: #DCDCDC;
+    font-size: 16;
+    font-name: Helvetica-Bold;
 }
-SmallButton {
-    height: 24;
+
+section:detail {
+    font-color: black;
     font-size: 14;
-    corner-radius: 5;
+    text-shadow-offset: 0,1;
+    text-shadow-color: rgba(255,255,255,0.2);
 }
-Label {
-    font-name: @secondaryFontName;
-    font-size: 20;
-    font-color: @primaryFontColor;
-    text-auto-fit: false;
-}
-LargeLabel {
-    font-size: 24;
-}
-SmallLabel {
+
+badgeTemplateCell:title {
     font-size: 15;
+    font-color: @mainFontColor;
+    text-shadow-offset: 0, -1;
+    text-shadow-color: black;
 }
-NavigationBar {
-    font-name: @secondaryFontName;
-    font-size: 20;
-    font-color: @primaryFontColor;
+
+badgeTemplateCell:subtitle {
+    font-color: gray;
+    text-shadow-offset: 0, -1;
+    text-shadow-color: black;
+}
+
+badgeTemplatesTriggerTable {
+    height: 700;
+}
+
+contentView:eventMasterBadgeTemplates, contentView:eventMasterQuestionTemplates, contentView:eventMasterTrigger, contentView:eventMasterScores, contentView:eventMasterInfos {
+    background-image: @mainBackground;
+}
+
+eventMasterScores:teamLabel {
+    font-color: @mainFontColor;
+}
+
+questionTemplateCell:title {
+    font-color: @mainFontColor;
+}
+
+questionTemplateCell:subtitle {
+    font-color: gray;
+}
+
+eventMasterTrigger:title {
+    font-color: @mainFontColor;
+}
+
+eventMasterTrigger:setATeam {
+    font-color: @mainFontColor;
+}
+
+questionChoiceCell:title {
+    font-color: lightGray;
     text-shadow-color: clear;
-    background-color-top: @primaryBackgroundColorTop;
-    background-color-bottom: @primaryBackgroundColorBottomStrong;
 }
-Progress {
-    progress-tint-color: @primaryBackgroundTintColor;
-    track-tint-color: @secondaryBackgroundColorTop;
+
+questionChoiceCell:title:selected {
+    font-name: Helvetica-Bold;
+    font-color: @mainFontColor;
 }
-SearchBar {
-    background-color-top: @primaryBackgroundColorTop;
-    background-color-bottom: @primaryBackgroundColorBottom;
-    scope-background-color: #FFFFFF;
-}
-SegmentedControl {
-    background-color: @primaryBackgroundColorTop;
-    background-color-selected: @primaryBackgroundColorBottomStrong;
-    border-color: @primaryBorderColor;
-    border-width: @primaryBorderWidth;
-    corner-radius: 7;
-    font-name: @secondaryFontNameBold;
-    font-size: 13;
-    font-color: @primaryFontColor;
+
+selectTeamCell:title {
     text-shadow-color: clear;
+    font-color: gray;
 }
-Switch {
-    on-tint-color: @primaryBackgroundTintColor;
+
+selectTeamCell:title:selected {
+    font-color: #333333;
+    text-shadow-color: @mainFontColor;
 }
-TabBar {
-    background-color-top: @primaryBackgroundColorTop;
-    background-color-bottom: @primaryBackgroundColorBottom;
+
+questionView:contentView {
+    background-image: KwarterAssets.bundle/kwarter_question_background.png;
 }
-TabBarItem {
-    font-name: @secondaryFontName;
-    font-color: @primaryFontColor;
-    font-size: 18;
-    text-offset: 0,-11;
+
+questionView:sectionTitle {
+    font-name: Helvetica-Bold;
 }
-TableCell {
-    background-color-top: @secondaryBackgroundColorTop;
-    background-color-bottom: @secondaryBackgroundColorBottom;
-    font-color: @primaryFontColor;
-    font-name: @secondaryFontNameBold;
-    font-size: 17;
+
+timelineView {
+    background-image: @mainBackground;
 }
-TableCellDetail {
-    font-name: @secondaryFontName;
-    font-size: 14;
-    font-color: @secondaryFontColor;
+
+questionCell:title {
+    font-color: @mainFontColor;
 }
-TextField {
-    height: 37;
-    font-name: @inputFontName;
-    font-size: 18;
-    border-style: rounded;
-    vertical-align: center;
-}
-LargeTextField {
-    height: 50;
-    font-size: 28;
-}
-View {
-    background-color: @primaryBackgroundColor;
-    background-image: NUIViewBackground.png;
+
+questionCell:timeLabel, questionCell:correctAnswer {
+    font-color: lightGray;
 }
