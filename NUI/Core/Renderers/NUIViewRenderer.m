@@ -16,8 +16,15 @@
         [view setBackgroundColor: [NUISettings getColorFromImage:@"background-image" withClass: className]];
     } else if ([NUISettings hasProperty:@"background-color" withClass:className]) {
         [view setBackgroundColor: [NUISettings getColor:@"background-color" withClass: className]];
+    } else if ([NUISettings hasProperty:@"background-color-top" withClass:className]) {
+        UIImage *gradientImage = [NUIGraphics
+                                  gradientImageWithTop:[NUISettings getColor:@"background-color-top" withClass:className]
+                                  bottom:[NUISettings getColor:@"background-color-bottom" withClass:className]
+                                  frame:view.bounds];
+        [view setBackgroundColor: [UIColor colorWithPatternImage:gradientImage]];
     }
-
+    
+    [self renderOpacity:view withClass:className];
     [self renderSize:view withClass:className];
     [self renderBorder:view withClass:className];
     [self renderShadow:view withClass:className];
@@ -75,6 +82,13 @@
 
     if (height != view.frame.size.height || width != view.frame.size.width) {
         view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y, width, height);
+    }
+}
+
++ (void)renderOpacity:(UIView*)view withClass:(NSString*)className
+{
+    if([NUISettings hasProperty:@"opacity" withClass:className]){
+        [view setAlpha:[NUISettings getFloat:@"opacity" withClass:className]];
     }
 }
 

@@ -16,5 +16,5 @@
 + (void)renderBorder:(UIView*)view withClass:(NSString*)className;
 + (void)renderShadow:(UIView*)view withClass:(NSString*)className;
 + (void)renderSize:(UIView*)view withClass:(NSString*)className;
-
++ (void)renderOpacity:(UIView*)view withClass:(NSString*)className;
 @end

@@ -32,6 +32,7 @@
     [NUIViewRenderer renderSize:label withClass:className];
     [NUIViewRenderer renderBorder:label withClass:className];
     [NUIViewRenderer renderShadow:label withClass:className];
+    [NUIViewRenderer renderOpacity:label withClass:className];
     [self renderText:label withClass:className];
 }
 

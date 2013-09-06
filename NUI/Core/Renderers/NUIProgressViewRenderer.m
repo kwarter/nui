@@ -33,6 +33,7 @@
         [progressView setTrackImage:[NUISettings getImage:@"track-image" withClass:className]];
     }
     
+    [NUIViewRenderer renderOpacity:progressView withClass:className];
     [NUIViewRenderer renderSize:progressView withClass:className];
 }
 

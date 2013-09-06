@@ -169,8 +169,53 @@ static NUISettings *instance = nil;
 
 + (NSArray*)getClasses:(NSString*)className
 {
-    NSArray *classes = [[[className componentsSeparatedByString: @":"] reverseObjectEnumerator] allObjects];
+    NSMutableArray *classes = [[[[className componentsSeparatedByString: @":"] reverseObjectEnumerator] allObjects] mutableCopy];
+    classes = [[self buildClasses:[self buildClassesCombinationsDictionary:classes] begin:@""] mutableCopy];
+    // Let's give priority to the most complex selectors
+    [classes sortUsingComparator:^NSComparisonResult(NSString *obj1, NSString *obj2) {
+        NSArray *array1 = [[[obj1 componentsSeparatedByString: @":"] reverseObjectEnumerator] allObjects];
+        NSArray *array2 = [[[obj2 componentsSeparatedByString: @":"] reverseObjectEnumerator] allObjects];
+        return array1.count > array2.count ? NSOrderedAscending : NSOrderedDescending;
+    }];
     return classes;
+}
+
++ (NSArray*)buildClasses:(NSDictionary*)dico begin:(NSString*)begin {
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    if ([dico isKindOfClass:[NSString class]]){
+        NSMutableArray *array = [arr mutableCopy];
+        [array addObject:begin];
+        return array;
+    }
+    if(begin.length){
+        [arr addObject:begin];
+    }
+    for (NSString *key in dico){
+        NSDictionary *obj = [dico valueForKey:key];
+        NSString *beginString = begin;
+        if(begin.length){
+            beginString = [begin stringByAppendingString:@":"];
+        }
+        [arr addObjectsFromArray:[self buildClasses:obj begin:[beginString stringByAppendingString:key]]];
+    }
+    return arr;
+}
+
++ (NSDictionary*)buildClassesCombinationsDictionary:(NSArray*)classes {
+    NSMutableArray *mutableClasses = [classes mutableCopy];
+    NSMutableDictionary *outputDictionary = [[NSMutableDictionary alloc] initWithCapacity:[classes count]];
+    for(NSString *currentClass in mutableClasses){
+        id object = nil;
+        if(mutableClasses.count > 1){
+            NSMutableArray *tempArray = [mutableClasses mutableCopy];
+            [tempArray removeObject:currentClass];
+            object = [self buildClassesCombinationsDictionary:tempArray];
+        } else {
+            object = @"";
+        }
+        [outputDictionary setObject:object forKey:currentClass];
+    }
+    return outputDictionary;
 }
 
 + (NUISettings*)getInstance

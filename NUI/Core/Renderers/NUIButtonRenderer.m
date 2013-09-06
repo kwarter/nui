@@ -122,7 +122,7 @@
         }
     }
 
-    
+    [NUIViewRenderer renderOpacity:button withClass:className];
     [NUIViewRenderer renderShadow:button withClass:className];
 }
 
