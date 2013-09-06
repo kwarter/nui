@@ -49,6 +49,11 @@
         tableView.backgroundView = [[UIImageView alloc] initWithImage:gradientImage];
     }
     
+    // Set background image
+    if ([NUISettings hasProperty:@"background-image" withClass:className]) {
+        UIImage *backgroundImage = [NUISettings getImage:@"background-image" withClass:className];
+        tableView.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
+    }
 }
 
 @end

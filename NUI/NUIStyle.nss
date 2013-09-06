@@ -109,3 +109,7 @@ questionCell:title {
 questionCell:timeLabel, questionCell:correctAnswer {
     font-color: lightGray;
 }
+
+eventMasterStats:keyLabel {
+    font-color: red;
+}
