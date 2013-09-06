@@ -35,7 +35,7 @@
 
 - (NSMutableArray*)getRuleSets:(NSString*)content
 {
-    NSString *pattern = @"(\\w[\\w\\s,]+)\\s*\\{([^\\}]+)\\}";
+    NSString *pattern = @"(\\w[\\w\\s,:]+)\\s*\\{([^\\}]+)\\}";
     NSArray *matches = [self getMatches:content withPattern:pattern];
     
     NSMutableArray *ruleSets = [[NSMutableArray alloc] init];

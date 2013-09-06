@@ -11,6 +11,7 @@
 #import "NUIGraphics.h"
 #import "NUIRenderer.h"
 #import "NUISettings.h"
+#import "NUIViewRenderer.h"
 
 @interface NUITableViewCellRenderer : NSObject
 

@@ -28,6 +28,7 @@
         [NUIRenderer renderLabel:cell.detailTextLabel withClass:className withSuffix:@"Detail"];
     }
     
+    [NUIViewRenderer renderOpacity:cell withClass:className];
 }
 
 + (void)sizeDidChange:(UITableViewCell*)cell
@@ -43,6 +44,12 @@
     if ([NUISettings hasProperty:@"background-color" withClass:className]) {
         UIImage *colorImage = [NUISettings getImageFromColor:@"background-color" withClass:className];
         cell.backgroundView = [[UIImageView alloc] initWithImage:colorImage];
+    }
+    
+    // Set background image
+    if ([NUISettings hasProperty:@"background-image" withClass:className]) {
+        UIImage *backgroundImage = [NUISettings getImage:@"background-image" withClass:className];
+        cell.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
     }
     
     // Set background gradient

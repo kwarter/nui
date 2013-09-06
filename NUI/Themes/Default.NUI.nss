@@ -127,3 +127,11 @@ View {
     background-color: @primaryBackgroundColor;
     background-image: NUIViewBackground.png;
 }
+
+badgeCell:coucou {
+    opacity: 0;
+}
+
+badgeCell:title {
+    font-size: 8;
+}
