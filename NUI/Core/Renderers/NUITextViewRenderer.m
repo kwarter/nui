@@ -13,15 +13,34 @@
 
 + (void)render:(UITextView*)textView withClass:(NSString*)className
 {
-    NSString *fontSizeProperty = @"font-size";
+    NSString *property = @"font-size";
     
-    // Set font name
-    if ([NUISettings hasProperty:@"font-name" withClass:className]) {
-        [textView setFont:[UIFont fontWithName:[NUISettings get:@"font-name" withClass:className] size:[NUISettings getFloat:fontSizeProperty withClass:className]]];
-        // If font-name is undefined but font-size is defined, use systemFont
-    } else if ([NUISettings getFloat:fontSizeProperty withClass:className]) {
-        [textView setFont:[UIFont systemFontOfSize:[NUISettings getFloat:fontSizeProperty withClass:className]]];
+    if ([NUISettings hasProperty:property withClass:className]) {
+        textView.font = [textView.font fontWithSize:[NUISettings getFloat:property withClass:className]];
     }
+    
+    
+    //font-name has higher priority than font-style
+    property = @"font-name";
+    if ([NUISettings hasProperty:property withClass:className]) {
+        textView.font = [UIFont fontWithName:[NUISettings get:property withClass:className] size:textView.font.pointSize];
+    }else{
+        property = @"font-style";
+        if ([NUISettings hasProperty:property withClass:className]) {
+            NSString*style=[NUISettings get:property withClass:className];
+            if (!style) {
+                //nothing todo
+            }else if ([style isEqualToString:@"bold"]) {
+                textView.font = [UIFont boldSystemFontOfSize: textView.font.pointSize];
+            }else if ([style isEqualToString:@"italic"]) {
+                textView.font = [UIFont italicSystemFontOfSize: textView.font.pointSize];
+            }else{
+                textView.font = [UIFont systemFontOfSize: textView.font.pointSize];
+            }
+            
+        }
+    }
+    
     
     // Set font color
     if ([NUISettings hasProperty:@"font-color" withClass:className]) {
