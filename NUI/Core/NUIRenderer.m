@@ -253,6 +253,17 @@ static NUIRenderer *instance = nil;
     [self registerObject:textField];
 }
 
++ (void)renderTextView:(UITextView*)textView
+{
+    [NUITextViewRenderer render:textView withClass:@"TextView"];
+    [self registerObject:textView];
+}
+
++ (void)renderTextView:(UITextView*)textView withClass:(NSString*)className
+{
+    [NUITextViewRenderer render:textView withClass:className];
+    [self registerObject:textView];
+}
 
 
 + (void)renderView:(UIView*)view
@@ -341,8 +352,9 @@ static NUIRenderer *instance = nil;
                                    [UITabBarItem class], @"renderTabBarItem",
                                    [UITableViewCell class], @"renderTableViewCell",
                                    [UIToolbar class], @"renderToolbar",
-                                   [UITextField class], @"renderTextField",
-                                   [UIButton class], @"renderButton",
+                                     [UITextField class], @"renderTextField",
+                                     [UITextView class], @"renderTextView",
+                                     [UIButton class], @"renderButton",
                                    [UILabel class], @"renderLabel",
                                    [UIView class], @"renderView",
                                    nil];

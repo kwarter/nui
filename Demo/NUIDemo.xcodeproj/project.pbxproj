@@ -45,6 +45,8 @@
 		4AAAFE7C166FD32600A0D34D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AAAFE7B166FD32600A0D34D /* Default-568h@2x.png */; };
 		4ADA71C616A0F15C00BDCF81 /* UISearchBar+NUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA71C516A0F15C00BDCF81 /* UISearchBar+NUI.m */; };
 		4ADA71CA16A103CD00BDCF81 /* NUISearchBarRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA71C916A103CD00BDCF81 /* NUISearchBarRenderer.m */; };
+		61BAF82017DEA0B400B0A0E7 /* NUITextViewRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BAF81F17DEA0B400B0A0E7 /* NUITextViewRenderer.m */; };
+		61BAF82317DEA48900B0A0E7 /* UITextView+NUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BAF82217DEA48900B0A0E7 /* UITextView+NUI.m */; };
 		832B9C1B176AEADA0054F06E /* iPad Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 832B9C19176AEADA0054F06E /* iPad Storyboard.storyboard */; };
 		832B9C1E176AEAED0054F06E /* iPhone Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 832B9C1C176AEAED0054F06E /* iPhone Storyboard.storyboard */; };
 		89B940701671418200850A9A /* NUIAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B940241671418100850A9A /* NUIAppearance.m */; };
@@ -144,6 +146,10 @@
 		4ADA71C516A0F15C00BDCF81 /* UISearchBar+NUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISearchBar+NUI.m"; sourceTree = "<group>"; };
 		4ADA71C816A103CD00BDCF81 /* NUISearchBarRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NUISearchBarRenderer.h; sourceTree = "<group>"; };
 		4ADA71C916A103CD00BDCF81 /* NUISearchBarRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NUISearchBarRenderer.m; sourceTree = "<group>"; };
+		61BAF81E17DEA0B300B0A0E7 /* NUITextViewRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NUITextViewRenderer.h; sourceTree = "<group>"; };
+		61BAF81F17DEA0B400B0A0E7 /* NUITextViewRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NUITextViewRenderer.m; sourceTree = "<group>"; };
+		61BAF82117DEA48900B0A0E7 /* UITextView+NUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+NUI.h"; sourceTree = "<group>"; };
+		61BAF82217DEA48900B0A0E7 /* UITextView+NUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+NUI.m"; sourceTree = "<group>"; };
 		832B9C1A176AEADA0054F06E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = "en.lproj/iPad Storyboard.storyboard"; sourceTree = "<group>"; };
 		832B9C1D176AEAED0054F06E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = "en.lproj/iPhone Storyboard.storyboard"; sourceTree = "<group>"; };
 		89B940231671418100850A9A /* NUIAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NUIAppearance.h; sourceTree = "<group>"; };
@@ -372,12 +378,14 @@
 				4A7793471675625800B5EE81 /* NUITabBarItemRenderer.m */,
 				89B9403E1671418100850A9A /* NUITabBarRenderer.h */,
 				89B9403F1671418100850A9A /* NUITabBarRenderer.m */,
-				E291BBD5179C89470016BC1D /* NUITableViewRenderer.h */,
 				E291BBD6179C89470016BC1D /* NUITableViewRenderer.m */,
+				E291BBD5179C89470016BC1D /* NUITableViewRenderer.h */,
 				89B940401671418100850A9A /* NUITableViewCellRenderer.h */,
 				89B940411671418100850A9A /* NUITableViewCellRenderer.m */,
 				89B940421671418100850A9A /* NUITextFieldRenderer.h */,
 				89B940431671418100850A9A /* NUITextFieldRenderer.m */,
+				61BAF81E17DEA0B300B0A0E7 /* NUITextViewRenderer.h */,
+				61BAF81F17DEA0B400B0A0E7 /* NUITextViewRenderer.m */,
 				D983DEE3169DBCCB00A3A180 /* NUIToolbarRenderer.h */,
 				D983DEE4169DBCCC00A3A180 /* NUIToolbarRenderer.m */,
 				89B940441671418100850A9A /* NUIViewRenderer.h */,
@@ -431,6 +439,8 @@
 				4A55F08716758EDA0056753C /* UITableViewCell+NUI.m */,
 				4A55F08916758F360056753C /* UITextField+NUI.h */,
 				4A55F08A16758F360056753C /* UITextField+NUI.m */,
+				61BAF82117DEA48900B0A0E7 /* UITextView+NUI.h */,
+				61BAF82217DEA48900B0A0E7 /* UITextView+NUI.m */,
 				D983DEE6169DC05300A3A180 /* UIToolbar+NUI.h */,
 				D983DEE7169DC05300A3A180 /* UIToolbar+NUI.m */,
 				4A55F076167570C10056753C /* UIView+NUI.h */,
@@ -567,6 +577,8 @@
 				4A5B5B2916F6471400CF8D16 /* NUIProgressViewRenderer.m in Sources */,
 				E291BBD7179C89470016BC1D /* NUITableViewRenderer.m in Sources */,
 				E291BBDA179C89710016BC1D /* UITableView+NUI.m in Sources */,
+				61BAF82017DEA0B400B0A0E7 /* NUITextViewRenderer.m in Sources */,
+				61BAF82317DEA48900B0A0E7 /* UITextView+NUI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
