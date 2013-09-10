@@ -16,6 +16,12 @@ BarButtonBack {
     background-image-insets: 0 6 0 12;
 }
 
+TextView:aTexView {
+    font-color: green;
+    font-size: 25;
+     background-olor: rgba(0,0,255,0.2);
+}
+
 section {
     font-color: #DCDCDC;
     font-size: 16;
@@ -111,5 +117,9 @@ questionCell:timeLabel, questionCell:correctAnswer {
 }
 
 eventMasterStats:keyLabel {
+    font-color: red;
+}
+
+TextField:LargeTextField{
     font-color: red;
 }
