@@ -55,9 +55,26 @@
         label.font = [label.font fontWithSize:[NUISettings getFloat:property withClass:className]];
     }
     
+    
+    //font-name has higher priority than font-style
     property = @"font-name";
     if ([NUISettings hasProperty:property withClass:className]) {
         label.font = [UIFont fontWithName:[NUISettings get:property withClass:className] size:label.font.pointSize];
+    }else{
+        property = @"font-style";
+        if ([NUISettings hasProperty:property withClass:className]) {
+            NSString*style=[NUISettings get:property withClass:className];
+            if (!style) {
+                //nothing todo
+            }else if ([style isEqualToString:@"bold"]) {
+                label.font = [UIFont boldSystemFontOfSize: label.font.pointSize];
+            }else if ([style isEqualToString:@"italic"]) {
+                label.font = [UIFont italicSystemFontOfSize: label.font.pointSize];
+            }else{
+                label.font = [UIFont systemFontOfSize: label.font.pointSize];
+            }
+            
+        }
     }
     
     property = @"text-align";

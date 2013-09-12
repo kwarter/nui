@@ -236,6 +236,7 @@ Below are all of the currently available style classes, their corresponding UI c
 * font-name *(FontName)*
 * font-size *(Number)*
 * height *(Number)*
+* opacity *(Number)*
 * padding *(Box)*
 * shadow-color *(Color)*
 * shadow-offset *(Offset)*
@@ -260,6 +261,7 @@ Below are all of the currently available style classes, their corresponding UI c
 * border-color *(Color)*
 * border-width *(Number)*
 * corner-radius *(Number)*
+* opacity *(Number)*
 * shadow-color *(Color)*
 * shadow-offset *(Offset)*
 * shadow-opacity *(Number)*
@@ -278,6 +280,7 @@ Below are all of the currently available style classes, their corresponding UI c
 * font-name *(FontName)*
 * font-size *(Number)*
 * height *(Number)*
+* opacity *(Number)*
 * shadow-color *(Color)*
 * shadow-offset *(Offset)*
 * shadow-opacity *(Number)*
@@ -309,6 +312,7 @@ Below are all of the currently available style classes, their corresponding UI c
 
 *UIProgressView*
 
+* opacity *(Number)*
 * progress-image *(Image)*
 * progress-tint-color *(Color)*
 * track-image *(Image)*
@@ -418,6 +422,7 @@ See SegmentedControl
 
 * background-color *(Color)*
 * background-color-top/background-color-bottom *(Gradient)*
+* background-image *(Image)*
 * separator-color *(Color)*
 * separator-style *(SeparatorStyle)*
 
@@ -433,6 +438,7 @@ See SegmentedControl
 * font-color-highlighted *(Color)*
 * font-name *(FontName)*
 * font-size *(Number)*
+* opacity *(Number)*
 * text-align *(TextAlign)*
 * text-alpha *(Number)*
 * text-auto-fit *(Boolean)*
@@ -482,6 +488,7 @@ The detail label of a *UITableViewCell*
 * font-name *(FontName)*
 * font-size *(Number)*
 * height *(Number)*
+* opacity *(Number)*
 * padding *(Box)*
 * shadow-color *(Color)*
 * shadow-offset *(Offset)*
@@ -495,6 +502,7 @@ The detail label of a *UITableViewCell*
 *UIView*
 
 * background-color *(Color)*
+* background-color-top/background-color-bottom *(Gradient)*
 * background-image *(Image)*
 * border-color *(Color)*
 * border-width *(Number)*
