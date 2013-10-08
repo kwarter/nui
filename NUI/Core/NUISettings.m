@@ -12,6 +12,7 @@
 
 @synthesize autoUpdatePath;
 @synthesize styles;
+@synthesize expandedClasses;
 static NUISettings *instance = nil;
 
 + (void)init
@@ -24,6 +25,7 @@ static NUISettings *instance = nil;
     instance = [self getInstance];
     NUIStyleParser *parser = [[NUIStyleParser alloc] init];
     instance.styles = [parser getStylesFromFile:name];
+    instance.expandedClasses = [NSMutableDictionary new];
 }
 
 + (void)loadStylesheetByPath:(NSString*)path
@@ -92,22 +94,22 @@ static NUISettings *instance = nil;
 }
 
 + (BOOL)getBoolean:(NSString*)property withClass:(NSString*)className
-{   
+{
     return [NUIConverter toBoolean:[self get:property withClass:className]];
 }
 
 + (float)getFloat:(NSString*)property withClass:(NSString*)className
-{   
+{
     return [NUIConverter toFloat:[self get:property withClass:className]];
 }
 
 + (CGSize)getSize:(NSString*)property withClass:(NSString*)className
-{   
+{
     return [NUIConverter toSize:[self get:property withClass:className]];
 }
 
 + (UIOffset)getOffset:(NSString*)property withClass:(NSString*)className
-{   
+{
     return [NUIConverter toOffset:[self get:property withClass:className]];
 }
 
@@ -117,7 +119,7 @@ static NUISettings *instance = nil;
 }
 
 + (UITextBorderStyle)getBorderStyle:(NSString*)property withClass:(NSString*)className
-{   
+{
     return [NUIConverter toBorderStyle:[self get:property withClass:className]];
 }
 
@@ -127,7 +129,7 @@ static NUISettings *instance = nil;
 }
 
 + (UIColor*)getColor:(NSString*)property withClass:(NSString*)className
-{   
+{
     return [NUIConverter toColor:[self get:property withClass:className]];
 }
 
@@ -169,58 +171,63 @@ static NUISettings *instance = nil;
 
 + (NSArray*)getClasses:(NSString*)className
 {
-    NSMutableArray *classes = [[[[className componentsSeparatedByString: @":"] reverseObjectEnumerator] allObjects] mutableCopy];
-    classes = [[self buildClasses:[self buildClassesCombinationsDictionary:classes] begin:@""] mutableCopy];
-    // Let's give priority to the most complex selectors
-    [classes sortUsingComparator:^NSComparisonResult(NSString *obj1, NSString *obj2) {
-        NSArray *array1 = [[[obj1 componentsSeparatedByString: @":"] reverseObjectEnumerator] allObjects];
-        NSArray *array2 = [[[obj2 componentsSeparatedByString: @":"] reverseObjectEnumerator] allObjects];
-        return array1.count > array2.count ? NSOrderedAscending : NSOrderedDescending;
-    }];
+    NSMutableArray *classes = nil;
+    if(!(classes = [instance.expandedClasses objectForKey:className])){
+        classes = [[[[className componentsSeparatedByString: @":"] reverseObjectEnumerator] allObjects] mutableCopy];
+        classes = [[self buildClasses:classes begin:1] mutableCopy];
+        // Let's give priority to the most complex selectors
+        [classes sortUsingComparator:^NSComparisonResult(NSString *obj1, NSString *obj2) {
+            NSArray *array1 = [[[obj1 componentsSeparatedByString: @":"] reverseObjectEnumerator] allObjects];
+            NSArray *array2 = [[[obj2 componentsSeparatedByString: @":"] reverseObjectEnumerator] allObjects];
+            return array1.count > array2.count ? NSOrderedAscending : NSOrderedDescending;
+        }];
+        [instance.expandedClasses setObject:classes forKey:className];
+    }
     return classes;
 }
 
-+ (NSArray*)buildClasses:(NSDictionary*)dico begin:(NSString*)begin {
-    NSMutableArray *arr = [[NSMutableArray alloc] init];
-    if ([dico isKindOfClass:[NSString class]]){
-        NSMutableArray *array = [arr mutableCopy];
-        [array addObject:begin];
-        return array;
++ (NSArray*)buildClasses:(NSArray*)classesArray begin:(int)begin{
+    NSMutableArray *mutClassesArray = [classesArray mutableCopy];
+    NSMutableArray *finalDic = [NSMutableArray new];
+    if(classesArray.count)
+        [finalDic addObject:[self flattenArrayIntoString:classesArray]];
+    int j = begin;
+    for(int i=begin; i<=[mutClassesArray count]; i++){
+        NSMutableArray *tempArray = [mutClassesArray copy];
+        NSString *currentObject = mutClassesArray[mutClassesArray.count -i];
+        tempArray = [self removeString:currentObject fromArray:mutClassesArray];
+        [finalDic addObjectsFromArray:[self buildClasses:tempArray begin:j]];
+        j++;
     }
-    if(begin.length){
-        [arr addObject:begin];
-    }
-    for (NSString *key in dico){
-        NSDictionary *obj = [dico valueForKey:key];
-        NSString *beginString = begin;
-        if(begin.length){
-            beginString = [begin stringByAppendingString:@":"];
-        }
-        [arr addObjectsFromArray:[self buildClasses:obj begin:[beginString stringByAppendingString:key]]];
-    }
-    return arr;
+    return finalDic;
 }
 
-+ (NSDictionary*)buildClassesCombinationsDictionary:(NSArray*)classes {
-    NSMutableArray *mutableClasses = [classes mutableCopy];
-    NSMutableDictionary *outputDictionary = [[NSMutableDictionary alloc] initWithCapacity:[classes count]];
-    for(NSString *currentClass in mutableClasses){
-        id object = nil;
-        if(mutableClasses.count > 1){
-            NSMutableArray *tempArray = [mutableClasses mutableCopy];
-            [tempArray removeObject:currentClass];
-            object = [self buildClassesCombinationsDictionary:tempArray];
-        } else {
-            object = @"";
++ (NSString*)flattenArrayIntoString:(NSArray*)array{
+    NSString *finalString = [NSString new];
+    for(id obj in array){
+        if ([obj isKindOfClass:[NSString class]]){
+            finalString = [NSString stringWithFormat:@"%@:%@",obj,finalString];
         }
-        [outputDictionary setObject:object forKey:currentClass];
     }
-    return outputDictionary;
+    return finalString.length ? [finalString substringToIndex:finalString.length-1] : finalString;
+}
+
++ (NSMutableArray*)removeString:(NSString*)string fromArray:(NSArray*)array{
+    NSMutableArray* mutArray = [array mutableCopy];
+    for(id object in mutArray){
+        if([object isKindOfClass:[NSString class]]){
+            if([((NSString*)object) isEqualToString:string]){
+                [mutArray removeObject:object];
+                break;
+            }
+        }
+    }
+    return mutArray;
 }
 
 + (NUISettings*)getInstance
 {
-    @synchronized(self) {    
+    @synchronized(self) {
         if (instance == nil) {
             [[NUISwizzler new] swizzleAll];
             instance = [NUISettings new];
