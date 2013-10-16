@@ -18,6 +18,7 @@
 
 @property(nonatomic,retain)NSString *autoUpdatePath;
 @property(nonatomic,retain)NSMutableDictionary *styles;
+@property(nonatomic,retain)NSMutableDictionary *expandedClasses;
 @property(nonatomic,retain)NSMutableArray *globalExclusions;
 
 + (void)init;
