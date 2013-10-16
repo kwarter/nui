@@ -173,7 +173,7 @@ static NUISettings *instance = nil;
 {
     NSMutableArray *classes = nil;
     if(!(classes = [instance.expandedClasses objectForKey:className])){
-        classes = [[[[className componentsSeparatedByString: @":"] reverseObjectEnumerator] allObjects] mutableCopy];
+        classes = [className componentsSeparatedByString: @":"];
         classes = [[self buildClasses:classes begin:1] mutableCopy];
         // Let's give priority to the most complex selectors
         [classes sortUsingComparator:^NSComparisonResult(NSString *obj1, NSString *obj2) {
@@ -205,7 +205,7 @@ static NUISettings *instance = nil;
     NSMutableArray *mutClassesArray = [classesArray mutableCopy];
     NSMutableArray *finalDic = [NSMutableArray new];
     if(classesArray.count){
-        [finalDic addObject:[[[classesArray reverseObjectEnumerator] allObjects] componentsJoinedByString:@":"]];
+        [finalDic addObject:[classesArray componentsJoinedByString:@":"]];
     }
     int j = begin;
     for(int i=begin; i<=[mutClassesArray count]; i++){
