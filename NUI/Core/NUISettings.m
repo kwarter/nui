@@ -177,52 +177,45 @@ static NUISettings *instance = nil;
         classes = [[self buildClasses:classes begin:1] mutableCopy];
         // Let's give priority to the most complex selectors
         [classes sortUsingComparator:^NSComparisonResult(NSString *obj1, NSString *obj2) {
-            NSArray *array1 = [[[obj1 componentsSeparatedByString: @":"] reverseObjectEnumerator] allObjects];
-            NSArray *array2 = [[[obj2 componentsSeparatedByString: @":"] reverseObjectEnumerator] allObjects];
-            return array1.count > array2.count ? NSOrderedAscending : NSOrderedDescending;
+            int countArray1 = [self occurencesOfChar:@":" inString:obj1];
+            int countArray2 = [self occurencesOfChar:@":" inString:obj2];
+            return countArray1 > countArray2 ? NSOrderedAscending : NSOrderedDescending;
         }];
         [instance.expandedClasses setObject:classes forKey:className];
     }
     return classes;
 }
 
++ (int)occurencesOfChar:(NSString*)charToFind inString:(NSString*)stringToLookInto{
+    NSScanner *scanner = [NSScanner scannerWithString:stringToLookInto];
+    
+    NSCharacterSet *charactersToCount;
+    if(charToFind.length == 1){
+        charactersToCount = [NSCharacterSet characterSetWithCharactersInString:charToFind];
+    }
+    
+    NSString *resultsChar;
+    
+    [scanner scanCharactersFromSet:charactersToCount intoString:&resultsChar];
+    
+    return [resultsChar length];
+}
+
 + (NSArray*)buildClasses:(NSArray*)classesArray begin:(int)begin{
     NSMutableArray *mutClassesArray = [classesArray mutableCopy];
     NSMutableArray *finalDic = [NSMutableArray new];
-    if(classesArray.count)
-        [finalDic addObject:[self flattenArrayIntoString:classesArray]];
+    if(classesArray.count){
+        [finalDic addObject:[[[classesArray reverseObjectEnumerator] allObjects] componentsJoinedByString:@":"]];
+    }
     int j = begin;
     for(int i=begin; i<=[mutClassesArray count]; i++){
-        NSMutableArray *tempArray = [mutClassesArray copy];
+        NSMutableArray *tempArray = [mutClassesArray mutableCopy];
         NSString *currentObject = mutClassesArray[mutClassesArray.count -i];
-        tempArray = [self removeString:currentObject fromArray:mutClassesArray];
+        [tempArray removeObject:currentObject];
         [finalDic addObjectsFromArray:[self buildClasses:tempArray begin:j]];
         j++;
     }
     return finalDic;
-}
-
-+ (NSString*)flattenArrayIntoString:(NSArray*)array{
-    NSString *finalString = [NSString new];
-    for(id obj in array){
-        if ([obj isKindOfClass:[NSString class]]){
-            finalString = [NSString stringWithFormat:@"%@:%@",obj,finalString];
-        }
-    }
-    return finalString.length ? [finalString substringToIndex:finalString.length-1] : finalString;
-}
-
-+ (NSMutableArray*)removeString:(NSString*)string fromArray:(NSArray*)array{
-    NSMutableArray* mutArray = [array mutableCopy];
-    for(id object in mutArray){
-        if([object isKindOfClass:[NSString class]]){
-            if([((NSString*)object) isEqualToString:string]){
-                [mutArray removeObject:object];
-                break;
-            }
-        }
-    }
-    return mutArray;
 }
 
 + (NUISettings*)getInstance
