@@ -172,7 +172,7 @@ static NUISettings *instance = nil;
 + (NSArray*)getClasses:(NSString*)className
 {
     NSMutableArray *classes = nil;
-    if(!(classes = [instance.expandedClasses objectForKey:className])){
+    if(className && !(classes = [instance.expandedClasses objectForKey:className])){
         classes = [className componentsSeparatedByString: @":"];
         classes = [[self buildClasses:classes begin:1] mutableCopy];
         // Let's give priority to the most complex selectors
