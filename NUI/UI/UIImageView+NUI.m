@@ -13,7 +13,7 @@
 - (void)initNUI
 {
     if (!self.nuiClass) {
-        self.nuiClass = @"TableCell";
+        self.nuiClass = @"ImageView";
     }
 }
 
