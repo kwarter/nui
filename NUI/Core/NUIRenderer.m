@@ -56,6 +56,19 @@ static NUIRenderer *instance = nil;
     [self registerObject:control];
 }
 
+
++ (void)renderImageView:(UIImageView*)imageView
+{
+    [NUIImageViewRenderer render:imageView withClass:@"ImageView"];
+    [self registerObject:imageView];
+}
+
++ (void)renderImageView:(UIImageView*)imageView withClass:(NSString*)className
+{
+    [NUIImageViewRenderer render:imageView withClass:className];
+    [self registerObject:imageView];
+}
+
 + (void)renderLabel:(UILabel*)label
 {
     [NUILabelRenderer render:label withClass:@"Label"];
@@ -356,6 +369,7 @@ static NUIRenderer *instance = nil;
                                      [UITextView class], @"renderTextView",
                                      [UIButton class], @"renderButton",
                                    [UILabel class], @"renderLabel",
+                                    [UIImageView class], @"renderImageView",
                                    [UIView class], @"renderView",
                                    nil];
     for (NSString *renderMethod in renderedClasses) {
