@@ -173,7 +173,7 @@ static NUISettings *instance = nil;
 {
     NSMutableArray *classes = nil;
     if(className && !(classes = [instance.expandedClasses objectForKey:className])){
-        classes = [className componentsSeparatedByString: @":"];
+        classes = (NSMutableArray*)[className componentsSeparatedByString: @":"];
         classes = [[self buildClasses:classes begin:1] mutableCopy];
         // Let's give priority to the most complex selectors
         [classes sortUsingComparator:^NSComparisonResult(NSString *obj1, NSString *obj2) {
@@ -186,19 +186,32 @@ static NUISettings *instance = nil;
     return classes;
 }
 
-+ (int)occurencesOfChar:(NSString*)charToFind inString:(NSString*)stringToLookInto{
-    NSScanner *scanner = [NSScanner scannerWithString:stringToLookInto];
++ (NSUInteger) occurencesOfChar:(NSString *)needle inString:(NSString *)haystack {
+    const char * rawNeedle = [needle UTF8String];
+    NSUInteger needleLength = strlen(rawNeedle);
     
-    NSCharacterSet *charactersToCount;
-    if(charToFind.length == 1){
-        charactersToCount = [NSCharacterSet characterSetWithCharactersInString:charToFind];
+    const char * rawHaystack = [haystack UTF8String];
+    NSUInteger haystackLength = strlen(rawHaystack);
+    
+    NSUInteger needleCount = 0;
+    NSUInteger needleIndex = 0;
+    for (NSUInteger index = 0; index < haystackLength; ++index) {
+        const char thisCharacter = rawHaystack[index];
+        if (thisCharacter != rawNeedle[needleIndex]) {
+            needleIndex = 0; //they don't match; reset the needle index
+        }
+        
+        //resetting the needle might be the beginning of another match
+        if (thisCharacter == rawNeedle[needleIndex]) {
+            needleIndex++; //char match
+            if (needleIndex >= needleLength) {
+                needleCount++; //we completed finding the needle
+                needleIndex = 0;
+            }
+        }
     }
     
-    NSString *resultsChar;
-    
-    [scanner scanCharactersFromSet:charactersToCount intoString:&resultsChar];
-    
-    return [resultsChar length];
+    return needleCount;
 }
 
 + (NSArray*)buildClasses:(NSArray*)classesArray begin:(int)begin{
