@@ -536,6 +536,32 @@ Style Value Types
 * **TextAlign** - A text alignment (e.g. `left`, `right`, `center`)
 * **VerticalAlign** - A vertical alignment (e.g. `top`, `center`, `bottom`, `fill`)
 
+Complexity
+----------
+The complexity of the parsing algorithm is 2^n, which means the execution time doubles at each new tag. It is __strongly unadvised__ to affect more than 8 tags to any element.
+
+(Execution time on an iPhone 5S)
+0.000054s for 1 tag
+0.000046s for 2 tags
+0.000056s for 3 tags
+0.000108s for 4 tags
+0.000266s for 5 tags
+0.000575s for 6 tags
+0.001005s for 7 tags
+0.002080s for 8 tags
+0.003731s for 9 tags
+0.006797s for 10 tags
+0.017005s for 11 tags
+0.033918s for 12 tags
+0.058554s for 13 tags
+0.106845s for 14 tags
+0.213918s for 15 tags
+0.463149s for 16 tags
+0.864750s for 17 tags
+1.737771s for 18 tags
+3.537542s for 19 tags
+7.412162s for 20 tags
+
 FAQ
 ---
 
