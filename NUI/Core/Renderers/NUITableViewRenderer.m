@@ -52,7 +52,11 @@
     // Set background image
     if ([NUISettings hasProperty:@"background-image" withClass:className]) {
         UIImage *backgroundImage = [NUISettings getImage:@"background-image" withClass:className];
-        tableView.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
+		if([NUISettings hasProperty:@"background-repeat" withClass:className] && [((NSString*)[NUISettings get:@"background-repeat" withClass:className]) isEqualToString:@"repeat"]){
+			tableView.backgroundColor = [UIColor colorWithPatternImage:backgroundImage];
+		} else {
+			tableView.backgroundView = [[UIImageView alloc] initWithImage:backgroundImage];
+		}
     }
 }
 

@@ -423,6 +423,7 @@ See SegmentedControl
 * background-color *(Color)*
 * background-color-top/background-color-bottom *(Gradient)*
 * background-image *(Image)*
+* background-repeat *(Repeat)*
 * separator-color *(Color)*
 * separator-style *(SeparatorStyle)*
 
@@ -532,6 +533,7 @@ Style Value Types
 * **Image** - A name of an image, as used in `[UIImage imageNamed:name]` (e.g. `MyImage.png`).
 * **Number** - A number (e.g. `-1`, `4.5`)
 * **Offset** - Two numbers comprising the horizontal and vertical values of an offset (e.g. `-1,1`)
+* **Repeat** - Can only take one value : `repeat` (at the moment only implemented on UITableView - the background stretches if this attribute isn’t set to `repeat`)
 * **SeparatorStyle** - A separator style, as rendered by a UITableViewSeparatorStyle. Accepted values are `none`, `single-line`, and `single-line-etched`.
 * **TextAlign** - A text alignment (e.g. `left`, `right`, `center`)
 * **VerticalAlign** - A vertical alignment (e.g. `top`, `center`, `bottom`, `fill`)
