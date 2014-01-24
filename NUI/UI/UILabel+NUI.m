@@ -42,7 +42,7 @@
 }
 
 - (void)override_sizeToFit{
-	if(!self.nuiIsApplied){
+	if(!self.nuiApplied){
 		[self applyNUI];
 	}
 	[self override_sizeToFit];

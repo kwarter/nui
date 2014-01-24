@@ -290,18 +290,6 @@ static NUISettings *instance = nil;
     return finalDic;
 }
 
-+ (NUISettings*)getInstance
-{
-    @synchronized(self) {
-        if (instance == nil) {
-            [[NUISwizzler new] swizzleAll];
-            instance = [NUISettings new];
-        }
-    }
-    
-    return instance;
-}
-
 + (void)setGlobalExclusions:(NSArray *)array
 {
     instance = [self getInstance];

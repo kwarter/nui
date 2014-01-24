@@ -47,13 +47,11 @@ static NUIRenderer *gInstance = nil;
 + (void)renderImageView:(UIImageView*)imageView
 {
     [NUIImageViewRenderer render:imageView withClass:@"ImageView"];
-    [self registerObject:imageView];
 }
 
 + (void)renderImageView:(UIImageView*)imageView withClass:(NSString*)className
 {
     [NUIImageViewRenderer render:imageView withClass:className];
-    [self registerObject:imageView];
 }
 
 + (void)renderLabel:(UILabel*)label
@@ -203,13 +201,11 @@ static NUIRenderer *gInstance = nil;
 + (void)renderTextView:(UITextView*)textView
 {
     [NUITextViewRenderer render:textView withClass:@"TextView"];
-    [self registerObject:textView];
 }
 
 + (void)renderTextView:(UITextView*)textView withClass:(NSString*)className
 {
     [NUITextViewRenderer render:textView withClass:className];
-    [self registerObject:textView];
 }
 
 + (void)renderView:(UIView*)view

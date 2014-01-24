@@ -23,12 +23,12 @@
     if (![self.nuiClass isEqualToString:@"none"]) {
         [NUIRenderer renderImageView:self withClass:self.nuiClass];
     }
-    self.nuiIsApplied = [NSNumber numberWithBool:YES];
+    self.nuiApplied = [NSNumber numberWithBool:YES];
 }
 
 - (void)override_didMoveToWindow
 {
-    if (!self.nuiIsApplied) {
+    if (!self.nuiApplied) {
         [self applyNUI];
     }
     [self override_didMoveToWindow];
