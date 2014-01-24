@@ -7,6 +7,7 @@
 //
 
 #import "NUIConverter.h"
+#import "NUIConstants.h"
 
 @implementation NUIConverter
 
@@ -86,7 +87,7 @@
 
 + (UITextBorderStyle)toBorderStyle:(NSString*)value
 {
-    if ([value isEqualToString:@"none"]) {
+    if ([value isEqualToString:kNUIClassNone]) {
         return UITextBorderStyleNone;
     } else if ([value isEqualToString:@"line"]) {
         return UITextBorderStyleLine;
@@ -100,7 +101,7 @@
 
 + (UITableViewCellSeparatorStyle)toSeparatorStyle:(NSString*)value
 {
-    if([value isEqualToString:@"none"]) {
+    if([value isEqualToString:kNUIClassNone]) {
         return UITableViewCellSeparatorStyleNone;
     } else if([value isEqualToString:@"single-line"]) {
         return UITableViewCellSeparatorStyleSingleLine;
@@ -190,8 +191,11 @@
 
 + (UIImage*)toImageFromColorName:(NSString*)value {
     UIColor* color = [self toColor:value];
+    CGFloat alphaChannel;
+    [color getRed:NULL green:NULL blue:NULL alpha:&alphaChannel];
+    BOOL opaqueImage = (alphaChannel == 1.0);
     CGRect rect = CGRectMake(0, 0, 1, 1);
-    UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0);
+    UIGraphicsBeginImageContextWithOptions(rect.size, opaqueImage, 0);
     [color setFill];
     UIRectFill(rect);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();

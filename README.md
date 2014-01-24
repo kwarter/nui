@@ -60,11 +60,14 @@ Some exciting features are on the horizon, and contributions are very encouraged
 Installation
 ------------
 1. Copy the NUI directory into your application
-1. Add the CoreImage and QuartzCore frameworks to your application if you haven't already (like [this](http://stackoverflow.com/a/3377682))
-1. Add `[NUIAppearance init];` to `application:didFinishLaunchingWithOptions` in AppDelegate.m (like [this](https://github.com/tombenner/nui/blob/master/Demo/NUIDemo/AppDelegate.m))
-1. Add `[NUISettings init];` to `@autoreleasepool` in `main()` in `main.m` (like [this](https://github.com/tombenner/nui/blob/master/Demo/NUIDemo/main.m))
+2. Add the CoreImage and QuartzCore frameworks to your application if you haven't already (like [this](http://stackoverflow.com/a/3377682))
+3. Add [CoreParse](https://github.com/beelsebob/CoreParse) as a subproject, set its iOSCoreParse target as a dependency of your target, and add libCoreParse.a to your linked libraries.
+4. Add `[NUIAppearance init];` to `application:didFinishLaunchingWithOptions` in AppDelegate.m (like [this](https://github.com/tombenner/nui/blob/master/Demo/NUIDemo/AppDelegate.m))
+5. Add `[NUISettings init];` to `@autoreleasepool` in `main()` in `main.m` (like [this](https://github.com/tombenner/nui/blob/master/Demo/NUIDemo/main.m))
 
-NUI can also be installed using [CocoaPods](http://cocoapods.org/) (its pod name is "NUI"). Steps 3. and 4. above are still required.
+NUI can also be installed using [CocoaPods](http://cocoapods.org/) (its pod name is "NUI"). Steps 4 and 5 above are still required.
+
+The Demo uses CocoaPods, so you'll want to [install CocoaPods](http://cocoapods.org/), run `pod install` in the `Demo` directory, and then open the .xcworkspace to open the project.
 
 Usage
 -----
@@ -149,6 +152,33 @@ int main(int argc, char *argv[])
 }
 ```
 
+### Styles specific to a device or orientation
+
+You can have styles or variable definitions only be applied for a particular device and/or orientation by using a @media query:
+
+````
+@media (device:ipad) {
+    /* styles or definitions for iPad */
+}
+
+@media (device:iphone) {
+    /* styles or definitions for iPhone */
+}
+
+@media (orientation:landscape) {
+    /* styles or definitions for landscape orientation */
+}
+
+@media (orientation:portrait) {
+    /* styles or definitions for portrait orientation  */
+}
+
+@media (orientation:portrait) and (device:ipad) {
+    /* styles or definitions for portrait orientation on iPad */
+}
+
+````
+
 ### Modifying Styling While The Application Is Running
 
 To do this, add the following line after `[NUISettings init];` in [main.m](https://github.com/tombenner/nui/blob/master/Demo/NUIDemo/main.m), replacing `@"/path/to/Style.nss"` with the absolute file path of your .nss file (e.g. `/Users/myusername/projects/ios/MyApp/Style.nss`):
@@ -217,6 +247,7 @@ Below are all of the currently available style classes, their corresponding UI c
 * background-color-disabled *(Color)*
 * background-color-highlighted *(Color)*
 * background-color-selected *(Color)*
+* background-color-selected-highlighted *(Color)*
 * background-image *(Image)*
 * background-image-insets *(Box)*
 * background-image-disabled *(Image)*
@@ -225,6 +256,8 @@ Below are all of the currently available style classes, their corresponding UI c
 * background-image-highlighted-insets *(Box)*
 * background-image-selected *(Image)*
 * background-image-selected-insets *(Box)*
+* background-image-selected-highlighted *(Image)*
+* background-image-selected-highlighted-insets *(Box)*
 * border-color *(Color)*
 * border-width *(Number)*
 * content-insets *(Box)*
@@ -233,6 +266,7 @@ Below are all of the currently available style classes, their corresponding UI c
 * font-color-disabled *(Color)*
 * font-color-highlighted *(Color)*
 * font-color-selected *(Color)*
+* font-color-selected-highlighted *(Color)*
 * font-name *(FontName)*
 * font-size *(Number)*
 * height *(Number)*
@@ -246,8 +280,10 @@ Below are all of the currently available style classes, their corresponding UI c
 * text-alpha *(Number)*
 * text-auto-fit *(Boolean)*
 * text-shadow-color *(Color)*
+* text-shadow-color-disabled *(Color)*
 * text-shadow-color-highlighted *(Color)*
 * text-shadow-color-selected *(Color)*
+* text-shadow-color-selected-highlighted *(Color)*
 * text-shadow-offset *(Offset)*
 * title-insets *(Box)*
 * width *(Number)*
@@ -307,6 +343,7 @@ Below are all of the currently available style classes, their corresponding UI c
 * shadow-image *(Image)*
 * text-shadow-color *(Color)*
 * text-shadow-offset *(Offset)*
+* title-vertical-offset *(Number)*
 
 #### Progress
 
@@ -409,7 +446,10 @@ See SegmentedControl
 
 * background-image-selected *(Image)*
 * background-image-selected-insets *(Box)*
+* finished-image *(Image)*
+* finished-image-selected *(Image)*
 * font-color *(Color)*
+* font-color-selected *(Color)*
 * font-name *(FontName)*
 * font-size *(Number)*
 * text-offset *(Offset)*
@@ -424,6 +464,7 @@ See SegmentedControl
 * background-color-top/background-color-bottom *(Gradient)*
 * background-image *(Image)*
 * background-repeat *(Repeat)*
+* row-height *(Number)*
 * separator-color *(Color)*
 * separator-style *(SeparatorStyle)*
 

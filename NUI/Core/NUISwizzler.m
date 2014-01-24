@@ -40,10 +40,11 @@
     [self swizzle:[UITextField class] methodName:@"editingRectForBounds:"];
     [self swizzle:[UIWindow class] methodName:@"becomeKeyWindow"];
 	[self swizzle:[UILabel class] methodName:@"sizeToFit"];
-	
+
     [self swizzleDealloc:[UINavigationBar class]];
     [self swizzleDealloc:[UITabBar class]];
     [self swizzleDealloc:[UITableViewCell class]];
+    [self swizzleDealloc:[UITableView class]];
 }
 
 - (void)swizzleAwakeFromNib:(Class)class

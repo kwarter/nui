@@ -13,6 +13,9 @@
 @synthesize autoUpdatePath;
 @synthesize styles;
 @synthesize expandedClasses;
+@synthesize stylesheetName, additionalStylesheetNames;
+@synthesize stylesheetOrientation;
+
 static NUISettings *instance = nil;
 
 + (void)init
@@ -23,9 +26,40 @@ static NUISettings *instance = nil;
 + (void)initWithStylesheet:(NSString*)name
 {
     instance = [self getInstance];
+    instance.stylesheetName = name;
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    instance.stylesheetOrientation = [self stylesheetOrientationFromInterfaceOrientation:orientation];
     NUIStyleParser *parser = [[NUIStyleParser alloc] init];
     instance.styles = [parser getStylesFromFile:name];
     instance.expandedClasses = [NSMutableDictionary new];
+}
+
++ (void)appendStylesheet:(NSString *)name
+{
+    instance = [self getInstance];
+    
+    if (!instance.additionalStylesheetNames)
+        instance.additionalStylesheetNames = [NSMutableArray array];
+    
+    [instance.additionalStylesheetNames addObject:name];
+    NUIStyleParser *parser = [[NUIStyleParser alloc] init];
+    [instance appendStyles:[parser getStylesFromFile:name]];
+}
+
+- (void)appendStyles:(NSMutableDictionary*)newStyles
+{
+    for (NSString* key in newStyles) {
+        id style = newStyles[key];
+        if (![styles objectForKey:key]) {
+            styles[key] = style;
+            continue;
+        }
+    
+        for (NSString *propertyKey in style) {
+            id propertyValue = style[propertyKey];
+            styles[key][propertyKey] = propertyValue;
+        }
+    }
 }
 
 + (void)loadStylesheetByPath:(NSString*)path
@@ -33,6 +67,31 @@ static NUISettings *instance = nil;
     instance = [self getInstance];
     NUIStyleParser *parser = [[NUIStyleParser alloc] init];
     instance.styles = [parser getStylesFromPath:path];
+}
+
++ (void)reloadStylesheets
+{
+    NUIStyleParser *parser = [[NUIStyleParser alloc] init];
+    instance.styles = [parser getStylesFromFile:instance.stylesheetName];
+    
+    if (instance.additionalStylesheetNames) {
+        for (NSString *name in instance.additionalStylesheetNames) {
+            [instance appendStyles:[parser getStylesFromFile:name]];
+        }
+    }
+}
+
++ (BOOL)reloadStylesheetsOnOrientationChange:(UIInterfaceOrientation)orientation
+{
+    instance = [self getInstance];
+    NSString *newStylesheetOrientation = [self stylesheetOrientationFromInterfaceOrientation:orientation];
+    
+    if ([newStylesheetOrientation isEqualToString:instance.stylesheetOrientation])
+        return NO;
+    
+    instance.stylesheetOrientation = newStylesheetOrientation;
+    [self reloadStylesheets];
+    return YES;
 }
 
 + (BOOL)autoUpdateIsEnabled
@@ -253,6 +312,29 @@ static NUISettings *instance = nil;
 {
     instance = [self getInstance];
     return instance.globalExclusions;
+}
+
++ (NSString *)stylesheetOrientation
+{
+    instance = [self getInstance];
+    return instance.stylesheetOrientation;
+}
+
++ (NSString *)stylesheetOrientationFromInterfaceOrientation:(UIInterfaceOrientation)orientation
+{
+    return UIInterfaceOrientationIsLandscape(orientation) ? @"landscape" : @"portrait";
+}
+
++ (NUISettings*)getInstance
+{
+    @synchronized(self) {
+        if (instance == nil) {
+            [[NUISwizzler new] swizzleAll];
+            instance = [NUISettings new];
+        }
+    }
+    
+    return instance;
 }
 
 @end
