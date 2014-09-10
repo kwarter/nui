@@ -17,4 +17,8 @@
 
 - (void)applyNUI;
 
+- (void)addNuiClass:(NSString *)nuiClass;
+- (void)removeNuiClass:(NSString *)nuiClass;
+- (void)toggleClass:(NSString *)nuiClass;
+
 @end
