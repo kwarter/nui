@@ -85,6 +85,11 @@
     return objc_getAssociatedObject(self, "nuiIsApplied");
 }
 
+- (BOOL)hasClass:(NSString *)nuiClass {
+    NSArray *classes = [self.nuiClass componentsSeparatedByString:@":"];
+    return [classes containsObject:nuiClass];
+}
+
 - (void)addNuiClass:(NSString *)nuiClass {
     if (![self hasClass:nuiClass]) {
         self.nuiClass = [self.nuiClass stringByAppendingString:[NSString stringWithFormat:@":%@",nuiClass]];
@@ -92,7 +97,9 @@
 }
 
 - (void)removeNuiClass:(NSString *)nuiClass {
-    self.nuiClass = [self.nuiClass stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@":%@",nuiClass] withString:@""];
+    NSMutableArray *classes = [[self.nuiClass componentsSeparatedByString:@":"] mutableCopy];
+    [classes removeObject:nuiClass];
+    self.nuiClass = [classes componentsJoinedByString:@":"];
 }
 
 - (void)toggleClass:(NSString *)nuiClass {
